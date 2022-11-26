@@ -1,0 +1,102 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 mt-4">
+      <h1 class="text-center">User List</h1>
+      <!-- table -->
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <!-- table header -->
+          <tr>
+            <th class="text-center">ID</th>
+            <th class="text-center">First Name</th>
+            <th class="text-center">Last Name</th>
+            <th class="text-center">&nbsp;</th>
+          </tr>
+        </thead>
+        <!-- table boday -->
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>
+              <button type="button" class="btn btn-info btn-sm me-2" (click)="showEditUserForm(user)">Edit</button>
+              <button type="button" class="btn btn-danger btn-sm" (click)="removeUser(user)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- table end -->
+      <button class="btn btn-success me-2" (click)="showAddUserForm()">Add New User</button>
+      <button class="btn btn-primary" routerLink="/login" (click)="onSignOut()">Sign out</button>
+
+      <div class="mt-4">
+        <!-- Form -->
+        <form *ngIf="userForm" #f="ngForm" (ngSubmit)="f.form.valid && saveUser(newUser)">
+          <h2>Add New User</h2>
+          <!-- Firstname -->
+          <div class="col-md-6 mb-3">
+            <div>
+              <p class="mb-1">
+                First Name:
+              </p>
+              <input type="text" name="firstName" [(ngModel)]="newUser.firstName" #firstName="ngModel"
+                class="form-control" [ngClass]="{ 'is-invalid': f.submitted && firstName.invalid }" required />
+              <div *ngIf="f.submitted && firstName.invalid" class="invalid-feedback">
+                <div *ngIf="firstName.errors?.['required']">First Name is required</div>
+              </div>
+            </div>
+          </div>
+          <!-- Lastname -->
+          <div class="col-md-6 mb-3">
+            <div>
+              <p class="mb-1">
+                Last Name:
+              </p>
+              <input type="text" class="form-control" name="lastName" [(ngModel)]="newUser.lastName" #lastName="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && lastName.invalid }" required />
+              <div *ngIf="f.submitted && lastName.invalid" class="invalid-feedback">
+                <div *ngIf="lastName.errors?.['required']">Last Name is required</div>
+              </div>
+            </div>
+          </div>
+          <p>
+            <button type="submit" class="btn btn-primary me-2">Submit</button>
+            <button type="button" class="btn btn-warning" (click)="cancelNewUser()">Cancel</button>
+          </p>
+        </form>
+        <form *ngIf="editUserForm" #f="ngForm" (ngSubmit)="f.form.valid && updateUser()">
+          <h2>Edit User Details</h2>
+          <!-- Fist name edit -->
+          <div class="col-md-6 mb-3">
+            <p class="mb-1">
+              First Name:
+            </p>
+            <input type="text" name="firstName" [(ngModel)]="editedUser.firstName" #firstName="ngModel"
+              class="form-control" [ngClass]="{ 'is-invalid': f.submitted && firstName.invalid }" required />
+            <div *ngIf="f.submitted && firstName.invalid" class="invalid-feedback">
+              <div *ngIf="firstName.errors?.['required']">First Name is required</div>
+            </div>
+          </div>
+          <!-- Last name edit -->
+          <div class="col-md-6 mb-3">
+            <div>
+              <p class="mb-1">
+                Last Name:
+              </p>
+              <input type="text" class="form-control" name="lastName" [(ngModel)]="editedUser.lastName"
+                #lastName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lastName.invalid }" required />
+              <div *ngIf="f.submitted && lastName.invalid" class="invalid-feedback">
+                <div *ngIf="lastName.errors?.['required']">Last Name is required</div>
+              </div>
+            </div>
+          </div>
+          <p>
+            <button type="submit" class="btn btn-primary me-2">Submit</button>
+            <button type="button" class="btn btn-warning" (click)="cancelEdits()">Cancel</button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

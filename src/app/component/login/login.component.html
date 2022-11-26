@@ -1,0 +1,49 @@
+<div class="justify-content-center align-items-center col-6 container">
+    <div class="row">
+        <div class="container p-5">
+            <!-- Login label -->
+            <div class="pb-2">
+                <h4 class="text-center">Login</h4>
+            </div>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                    <p class="m-0" [ngClass]="{ 'has-error': isSubmitted && formControls['email'].errors }">
+                        <label class="form-label">Email :</label>
+                        <input type="email" class="form-control" formControlName="email" name="email" email />
+                    </p>
+                    <!-- Email is mandatory -->
+                    <div *ngIf="isSubmitted && formControls['email'].errors" class="help-block">
+                        <small class="text-danger" *ngIf="formControls['email'].errors['required']">Email is
+                            required</small>
+                    </div>
+                    <!-- Email validation -->
+                    <small class="text-danger" *ngIf="formControls['email'].errors?.['email']">
+                        Email must be a valid email address
+                    </small>
+                </div>
+                <!-- Password input -->
+                <div class="form-outline mb-4">
+                    <p class="m-0" [ngClass]="{ 'has-error': isSubmitted && formControls['password'].errors }">
+                        <label class="form-label">Password :</label>
+                        <input type="password" class="form-control" formControlName="password" name="password" />
+                    </p>
+                    <!-- Password is mandatory -->
+                    <div *ngIf="isSubmitted && formControls['password'].errors" class="help-block">
+                        <small class="text-danger" *ngIf="formControls['password'].errors['required']">Password is
+                            required</small>
+
+                    </div>
+                    <!-- Password length validation -->
+                    <small class="text-danger" *ngIf="formControls['password'].errors?.['minlength']">
+                        Password must be at least 4 characters long.
+                    </small>
+                </div>
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary btn-block mb-4 me-2">Login</button>
+                <button type="button" class="btn btn-primary btn-block mb-4"
+                    routerLink="/registration">Registration</button>
+            </form>
+        </div>
+    </div>
+</div>
